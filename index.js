@@ -7,20 +7,27 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-	const args = message.content.substring(prefix.length).split(' ');
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-	if (message.content.startsWith(`${prefix}ping`)) {
-		message.channel.send('Pong.');
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = args.shift().toLowerCase();
+
+	if (message.content.startsWith(`${prefix}duel`)) {
+		const taggedUser = message.mentions.users.first();
+		message.channel.send(`${taggedUser}, you've been challenged to a duel!\nDo you accept the request?\n(type "!duel yes" or "!duel no"`);
+		// Код, где юзер пишет свой ответ в виде кода
 	}
-	else if (message.content.startsWith(`${prefix}beep`)) {
-		message.channel.send('Boop.');
+
+	else if (command === 'args-info') {
+		if (!args.length) {
+			return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+		}
+	else if (args[0] === 'foo') {
+		return message.channel.send('bar');
 	}
-	else if (message.content.startsWith(`${prefix}server`)) {
-		message.channel.send(`Server name: ${message.guild.name}\nTotal population: ${message.guild.memberCount}`);
-	}
-	else if (message.content === `${prefix}user-info`) {
-		message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
-	}
+
+	message.channel.send(`First argument: ${args[0]}`);
+}
 });
 
 client.login(token);

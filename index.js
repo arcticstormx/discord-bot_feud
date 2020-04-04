@@ -12,11 +12,46 @@ client.on('message', message => {
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 
-	if (message.content.startsWith(`${prefix}duel`)) {
-		const taggedUser = message.mentions.users.first();
-		message.channel.send(`${taggedUser}, you've been challenged to a duel!\nDo you accept the request?\n(type "!duel yes" or "!duel no"`);
-		// Код, где юзер пишет свой ответ в виде кода
+	// if (command === 'duel' && args[0].startsWith("@")) {
+	if (command === 'duel') {
+		const playerOne = message.author;
+		const playerTwo = message.mentions.users.first();
+
+		const filter = response => {
+			return (response.content.toLowerCase() === "yes") && (response.author === playerTwo);
+		};
+
+		message.channel.send(`${playerTwo}, you've been challenged to a duel!
+		\nDo you accept the request?
+		\n(type "yes" or "no")`)
+		.then(() => {
+			message.channel.awaitMessages(filter, { maxMatches: 1, time: 10000, errors: ["no"] })
+				.then(collected => {
+					let playerOneGuess = null;
+					let playerTwoGuess = null;
+					message.channel.send(`${playerTwo}, prepare for battle!`);
+					message.channel.send(`The game is Rock Paper Scissors.\nEach player has to write either "paper", "rock" or "scissors".`);
+					message.channel.send("Begin!");
+					if ((message.author === playerOne) && (message.content.some(["rock", "scissors", "paper"]))) {
+
+					} else if ((message.author === playerTwo) && (message.content.some(["rock", "scissors", "paper"]))) {
+
+					}
+				})
+				.catch(collected => {
+					message.channel.send('You chose no... What a shame.');
+				});
+		});
 	}
+
+
+
+
+
+
+
+
+
 
 	else if (command === 'args-info') {
 		if (!args.length) {

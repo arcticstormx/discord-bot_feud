@@ -23,25 +23,26 @@ client.on('message', message => {
 
 		message.channel.send(`${playerTwo}, you've been challenged to a duel!
 		\nDo you accept the request?
-		\n(type "yes" or "no")`)
-		.then(() => {
-			message.channel.awaitMessages(filter, { maxMatches: 1, time: 10000, errors: ["no"] })
+		\n(type "yes" or "no")`);
+		// .then(() => {
+			message.channel.awaitMessages(filter, { maxMatches: 1, time: 10000, errors: ["time"] })
 				.then(collected => {
 					let playerOneGuess = null;
 					let playerTwoGuess = null;
 					message.channel.send(`${playerTwo}, prepare for battle!`);
 					message.channel.send(`The game is Rock Paper Scissors.\nEach player has to write either "paper", "rock" or "scissors".`);
-					message.channel.send("Begin!");
-					if ((message.author === playerOne) && (message.content.some(["rock", "scissors", "paper"]))) {
-
-					} else if ((message.author === playerTwo) && (message.content.some(["rock", "scissors", "paper"]))) {
-
-					}
+					message.channel.send(collected + " Begin!");
+					message.channel.send(collected.content + " content");
+					// if ((message.author === playerOne) && (message.content.some(["rock", "scissors", "paper"]))) {
+					//
+					// } else if ((message.author === playerTwo) && (message.content.some(["rock", "scissors", "paper"]))) {
+					//
+					// }
 				})
 				.catch(collected => {
-					message.channel.send('You chose no... What a shame.');
+					message.channel.send(collected + ' You chose no... What a shame.');
 				});
-		});
+		// });
 	}
 
 
@@ -53,16 +54,16 @@ client.on('message', message => {
 
 
 
-	else if (command === 'args-info') {
-		if (!args.length) {
-			return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
-		}
-	else if (args[0] === 'foo') {
-		return message.channel.send('bar');
-	}
-
-	message.channel.send(`First argument: ${args[0]}`);
-}
+	// else if (command === 'args-info') {
+	// 	if (!args.length) {
+	// 		return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+	// 	}
+	// else if (args[0] === 'foo') {
+	// 	return message.channel.send('bar');
+	// }
+	//
+	// message.channel.send(`First argument: ${args[0]}`);
+	// }
 });
 
 client.login(token);

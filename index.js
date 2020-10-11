@@ -33,11 +33,6 @@ client.on('message', message => {
 					message.channel.send(`The game is Rock Paper Scissors.\nEach player has to write either "paper", "rock" or "scissors".`);
 					message.channel.send(collected + " Begin!");
 					message.channel.send(collected.content + " content");
-					// if ((message.author === playerOne) && (message.content.some(["rock", "scissors", "paper"]))) {
-					//
-					// } else if ((message.author === playerTwo) && (message.content.some(["rock", "scissors", "paper"]))) {
-					//
-					// }
 				})
 				.catch(collected => {
 					message.channel.send(collected + ' You chose no... What a shame.');
